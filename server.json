@@ -1,0 +1,8 @@
+{
+  "name" : "enquiryapp",
+  "script" : "index.js",
+  "cwd" : "/root/enquiryapp/",
+  "watch" : true,
+  "ignore_watch" : ["public"]
+}
+
