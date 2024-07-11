@@ -18,7 +18,12 @@ initAdmin();
 //DataBase Connection
 dbConnect();
 app.use(morgon("dev"));
-app.use(cors());
+app.use(cors(
+  {
+    origin: process.env.Development_URL || "http://localhost:3000" || process.env.Production_URL,
+    credentials: true,
+  }
+));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

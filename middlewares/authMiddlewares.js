@@ -27,8 +27,9 @@ const authAdmin = asyncHandler(async (req, res, next)=>{
 const authBuyer = asyncHandler(async (req, res, next)=>{
   let token;
   let company;
-  if (req?.headers?.authorization?.startsWith('Bearer')) {
-    token = req.headers.authorization.split(" ")[1];
+  console.log("req.headers",req.headers.cookie.split("jwt=")[1])
+  if (req.headers.cookie) {
+    token = req.headers.cookie.split("jwt=")[1]
     // company = req?.headers?.company_code;
     // console.log("company",company)
     // const check_company = await admin.findOne({company_code:company});

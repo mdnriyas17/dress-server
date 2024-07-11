@@ -18,8 +18,20 @@ router.post('/register', asyncHandler(async (req, res) => {
   req.body.status = true;
   try {
     const create = await crud.insertOne(buyers, req.body);
+    let token = generateToken(create?._id);
     if (create) {
-      successToken(res, 201, true, "Register Successfully",create,generateToken(create?._id));
+      res.cookie("jwt", token, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+        sameSite: "strict",
+        secure: true,
+        path: "/",
+        partitioned: true,
+      });
+      const result  = {
+        user_id: create?._id,
+      };
+      success(res, 200, true, "Register Successfully", result);
     } else {
       throw new Error("Register Failed!");
     }
@@ -38,10 +50,49 @@ router.post('/register', asyncHandler(async (req, res) => {
     let exclude_file = ["password", "is_blocked", "created_at", "status","createdAt","updatedAt"];
     exclude_file.forEach((el)=> delete result_data[el])
     if (find_buyers && await find_buyers?.password==password) {
-      successToken(res, 200, true, "Login Successfully",result_data,generateToken(find_buyers?._id));
-    } else {
-      throw new Error("Invalid Username Or Password!");
+      const tokens = generateToken(find_buyers?._id);
+      if (find_buyers) {
+        res.cookie("jwt", tokens, {
+          maxAge: 24 * 60 * 60 * 1000,
+          // httpOnly: true,
+          sameSite: "strict",
+          secure: true,
+          path: "/",
+          partitioned: true,
+        });
+        const result  = {
+          user_id: find_buyers?._id,
+        };
+        success(res, 200, true, "Login Successfully", result);
+      }  else {
+        res.cookie("jwt", tokens, {
+          maxAge:  1000,
+          httpOnly: true,
+          sameSite: "strict", 
+          secure: true,
+          path: "/",
+          partitioned: true,  
+        })
     } 
+    } else {
+      throw new Error("Invalid User");
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+}))
+//logout
+.get('/logout',authBuyer, asyncHandler(async (req, res) => {
+  try {
+    res.cookie("jwt", "", {
+      maxAge: 1,
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
+      path: "/",
+      partitioned: true,
+    });
+    success(res, 200, true, "Logout Successfully");
   } catch (error) {
     throw new Error(error);
   }
