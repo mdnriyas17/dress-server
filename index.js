@@ -20,7 +20,7 @@ dbConnect();
 app.use(morgon("dev"));
 app.use(cors(
   {
-    origin: "*",
+    origin: "https://dress-website-new.vercel.app/",
     credentials: true,
   }
 ));

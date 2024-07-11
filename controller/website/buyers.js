@@ -21,7 +21,7 @@ router.post('/register', asyncHandler(async (req, res) => {
     let token = generateToken(create?._id);
     if (create) {
       res.cookie("jwt", token, {
-        httpOnly: true,
+        // httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
         sameSite: "strict",
         secure: true,
