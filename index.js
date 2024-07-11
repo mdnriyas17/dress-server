@@ -20,7 +20,7 @@ dbConnect();
 app.use(morgon("dev"));
 app.use(cors(
   {
-    origin: process.env.Development_URL || "http://localhost:3000" || process.env.Production_URL,
+    origin: "*",
     credentials: true,
   }
 ));
