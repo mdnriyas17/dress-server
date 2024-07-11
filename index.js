@@ -20,7 +20,10 @@ dbConnect();
 app.use(morgon("dev"));
 app.use(cors(
   {
-    origin: ["https://dress-website-new.vercel.app/","https://dress-website-qgwj91s47-mdnriyas17s-projects.vercel.app/" ],
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    exposedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   }
 ));
