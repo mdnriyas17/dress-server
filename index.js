@@ -18,14 +18,10 @@ initAdmin();
 //DataBase Connection
 dbConnect();
 app.use(morgon("dev"));
-app.use(cors(
-  {
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  }
-));
+app.use(cors({
+  origin:["http://localhost:3000","https://dress-website-new.vercel.app"],
+  credentials: true
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
