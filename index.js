@@ -18,15 +18,10 @@ initAdmin();
 //DataBase Connection
 dbConnect();
 app.use(morgon("dev"));
-app.use(cors(
-  {
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    exposedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  }
-));
+app.use(cors({
+  origin: "*",
+  credentials: true,
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
