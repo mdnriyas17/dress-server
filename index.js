@@ -18,7 +18,7 @@ initAdmin();
 //DataBase Connection
 dbConnect();
 app.use(morgon("dev"));
-const allowedOrigins = ["https://dress-website-new.vercel.app"]; 
+const allowedOrigins = ["https://dress-website-new.vercel.app","http://localhost:3000"]; 
 
 app.use(cors({
   origin: allowedOrigins,

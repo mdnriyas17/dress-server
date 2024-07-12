@@ -53,26 +53,17 @@ router.post('/register', asyncHandler(async (req, res) => {
       const tokens = generateToken(find_buyers?._id);
       if (find_buyers) {
         res.cookie("jwt", tokens, {
-          maxAge: 24 * 60 * 60 * 1000,
-          // httpOnly: true,
-          // sameSite: "strict",
-          secure: true,
-          path: "/",
-          partitioned: true,
+          httpOnly: true,
+          secure: true, // set to true if your site is served over HTTPS
+          sameSite: 'None', // 'Lax' or 'Strict' might also be appropriate depending on your use case
+          maxAge: 24 * 60 * 60 * 1000, // 24 hours
         });
         const result  = {
           user_id: find_buyers?._id,
         };
         success(res, 200, true, "Login Successfully", result);
       }  else {
-        res.cookie("jwt", tokens, {
-          maxAge:  1000,
-          // httpOnly: true,
-          // sameSite: "strict", 
-          secure: true,
-          path: "/",
-          partitioned: true,  
-        })
+        res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None' });
     } 
     } else {
       throw new Error("Invalid User");
